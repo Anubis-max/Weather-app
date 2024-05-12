@@ -22,13 +22,21 @@ class MyGrid(FloatLayout):
             desc = data['weather'][0]['description']
             humidity = data['main']['humidity']
             wind = data['wind']['speed']
-
-        self.show_popup(temp, desc, humidity, wind, city)
-
+            self.show_popup(temp, desc, humidity, wind, city)
+        else:
+            self.show_error()
+            
     def show_popup(self, temp, desc, humidity, wind, city):
         show = P(temp, desc, humidity, wind, city)
 
         popupWindow = Popup(title="Weather", content=show, size_hint=(0.6, 0.8), auto_dismiss=False)
+
+        popupWindow.open()
+
+    def show_error(self):
+        show = error()
+
+        popupWindow = Popup(title="Error X_X", content=show, size_hint=(0.6, 0.8), auto_dismiss=False)
 
         popupWindow.open()
 
@@ -63,7 +71,11 @@ class P(FloatLayout):
             return "image/cloud.png"
         else:
             return "image/cloud.png"
-        
+
+class error(FloatLayout):
+    def close_popup(self):
+        self.parent.parent.parent.dismiss()
+
 class MyApp(App):
     def build(self):
         self.title = "Weather app"
