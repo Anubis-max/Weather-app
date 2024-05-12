@@ -1,0 +1,147 @@
+#:kivy 2.1.0
+#:import Window kivy.core.window
+
+<MyGrid>:
+    FloatLayout:
+        Image: 
+            source: "image/weather.jpg"
+            allow_stretch: True
+            keep_ratio: False
+            size: self.parent.size
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+            canvas:
+                Color:
+                    rgba: 0.231, 0.231, 0.231, 0.9
+
+                RoundedRectangle:
+                    size: root.width / 2.74, root.height / 1.5
+                    pos: self.parent.center[0] - (root.width / 2.74) / 2, self.parent.center[1] - (root.height / 1.54) / 2
+                    radius: [(40, 40), (40, 40), (40, 40), (40, 40)]
+
+            Image:
+                source: "image/sun.png"
+                allow_stretch: True
+                keep_ratio: False
+                size_hint: None, None
+                size: root.width * 0.2, root.height * 0.17
+                pos: root.width / 1.92, root.height / 1.5
+
+            Image:
+                source: "image/thunder.png"
+                allow_stretch: True
+                keep_ratio: False
+                size_hint: None, None
+                size: root.width * 0.15, root.height * 0.17
+                pos: root.width / 2.3, root.height / 1.5
+            
+            Image:
+                source: "image/raincloud.png"
+                allow_stretch: True
+                keep_ratio: False
+                size_hint: None, None
+                size: root.width * 0.1, root.height * 0.17
+                pos: root.width / 3.05, root.height / 1.5
+
+            Image:
+                source: "image/sign.png"
+                allow_stretch: True
+                keep_ratio: False
+                size_hint: None, None
+                size: root.width * 0.2, root.height * 0.25
+                pos: root.width / 2.5, root.height / 2.8
+                
+            TextInput:
+                id: city     
+                hint_text: "Search a location..."
+                mode: "rectangle"
+                background_color: 0.171, 0.171, 0.178, 1
+                foreground_color: 1, 1, 1, 1
+                font_size: min(self.width / (len(self.text) or 1) + dp(10), 25)
+                size: root.width * 0.25, root.height / 10.8
+                pos: root.width / 2.9, root.height / 5
+
+            Button:
+                background_normal: "image\magnifier.png"
+                pos: root.width / 1.68, root.height / 5
+                size: root.width / 12, root.height / 12
+                on_press: root.btn()
+
+<P>:
+    FloatLayout:
+        Label:
+            id: temp
+            text: "0.0"
+            pos: (app.root_window.width / 2) - (self.width / 2), (app.root_window.height / 2) - (self.height / 2)
+            font_size: app.root_window.width / 20
+
+        Label:
+            id: desc
+            text: ""
+            pos: (app.root_window.width / 1.99) - (self.width / 2), (app.root_window.height / 2) - (self.height / 1.7)
+            font_size: app.root_window.width / 40
+
+        Label:
+            id: humidity
+            text: ""
+            pos: (app.root_window.width / 3.2) - (self.width / 2), (app.root_window.height / 2) - (self.height / 1.1)
+            font_size: app.root_window.width / 40
+        
+        Label:
+            text: "Humidity"
+            pos: (app.root_window.width / 3.1) - (self.width / 2), (app.root_window.height / 2) - (self.height / 1.04)
+            font_size: app.root_window.width / 60
+        
+        Image:
+            source: "image/water_icon.png"
+            pos: (app.root_window.width / 3.8) - (self.width / 2), (app.root_window.height / 2) - (self.height / 0.26)
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: None, None
+            size: app.root_window.width / 19.2, app.root_window.height / 10.8
+
+        Label:
+            id: wind
+            text: ""
+            pos: (app.root_window.width / 1.4) - (self.width / 2), (app.root_window.height / 2) - (self.height / 1.1)
+            font_size: app.root_window.width / 40
+
+        Label:
+            text: "Wind speed"
+            pos: (app.root_window.width / 1.4) - (self.width / 2), (app.root_window.height / 2) - (self.height / 1.04)
+            font_size: app.root_window.width / 60
+
+        Image:
+            source: "image/turbine.png"
+            pos: (app.root_window.width / 1.6) - (self.width / 2), (app.root_window.height / 2) - (self.height / 0.26)
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: None, None
+            size: app.root_window.width / 19.2, app.root_window.height / 10.8
+
+        Button:
+            pos: (app.root_window.width / 1.3) - (self.width / 2), (app.root_window.height / 1.16) - (self.height / 2)
+            size_hint: None, None
+            size: app.root_window.width / 19.2, app.root_window.height / 10.8
+            background_normal: "image\exit_button.png"
+            on_press: root.close_popup()
+
+        Label:
+            pos: (app.root_window.width / 3.35) - (self.width / 2), (app.root_window.height / 1.45) - (self.height / 2)
+            font_size: app.root_window.width / 40
+            id: city
+            text: ""
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: app.root_window.width / 480
+                    rectangle: (app.root_window.width / 1.92) - (self.width / 2), (app.root_window.height / 1.06) - (self.height / 2), app.root_window.width / 7, app.root_window.height / 5
+
+        Image:
+            source: root.chose_weather()
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: None, None
+            size: app.root_window.width / 5, app.root_window.height / 5
+            pos: (app.root_window.width / 2) - (self.width / 2), (app.root_window.height / 1.5) - (self.height / 2)
