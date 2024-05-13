@@ -60,6 +60,8 @@
                 font_size: min(self.width / (len(self.text) or 1) + dp(10), 25)
                 size: root.width * 0.25, root.height / 10.8
                 pos: root.width / 2.9, root.height / 5
+                on_text_validate: root.enter(city.text)
+                multiline: False
 
             Button:
                 background_normal: "image\magnifier.png"
