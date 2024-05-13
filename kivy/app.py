@@ -9,7 +9,7 @@ import requests
 class MyGrid(FloatLayout):
     locate = ObjectProperty(None)
 
-    def btn(self):
+    def btn(self, *kwargs):
         api_key="83e2142cb7dda473719513bc695cbbdf"
         city = self.ids.city.text
         url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
@@ -25,24 +25,7 @@ class MyGrid(FloatLayout):
             self.show_popup(temp, desc, humidity, wind, city)
         else:
             self.show_error()
-            
-    def enter(self, textInput):
-        api_key="83e2142cb7dda473719513bc695cbbdf"
-        city = self.ids.city.text
-        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            data = response.json()
-            temp = data['main']['temp']
-            temp = int(temp - 273.15)
-            desc = data['weather'][0]['description']
-            humidity = data['main']['humidity']
-            wind = data['wind']['speed']
-            self.show_popup(temp, desc, humidity, wind, city)
-        else:
-            self.show_error()
-
+ 
     def show_popup(self, temp, desc, humidity, wind, city):
         show = P(temp, desc, humidity, wind, city)
 
