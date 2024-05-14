@@ -5,6 +5,8 @@ from kivy.core.window import Window
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.popup import Popup
 import requests
+import time
+from datetime import datetime
 
 class MyGrid(FloatLayout):
     locate = ObjectProperty(None)
@@ -22,12 +24,14 @@ class MyGrid(FloatLayout):
             desc = data['weather'][0]['description']
             humidity = data['main']['humidity']
             wind = data['wind']['speed']
-            self.show_popup(temp, desc, humidity, wind, city)
+            time = datetime.now()
+            time = time.strftime('%H:%M:%S')
+            self.show_popup(temp, desc, humidity, wind, city, time)
         else:
             self.show_error()
  
-    def show_popup(self, temp, desc, humidity, wind, city):
-        show = P(temp, desc, humidity, wind, city)
+    def show_popup(self, temp, desc, humidity, wind, city, time):
+        show = P(temp, desc, humidity, wind, city, time)
 
         popupWindow = Popup(title="Weather", content=show, size_hint=(0.6, 0.8), auto_dismiss=False)
 
@@ -42,7 +46,7 @@ class MyGrid(FloatLayout):
 
 class P(FloatLayout):
     source = StringProperty("")
-    def __init__(self, temp, desc, humidity, wind, city):
+    def __init__(self, temp, desc, humidity, wind, city, time):
 
         self.desc = desc
 
@@ -52,7 +56,8 @@ class P(FloatLayout):
         self.ids.humidity.text = (str(humidity) + "%")
         self.ids.wind.text = (str(wind) + " km/h")
         self.ids.city.text = (str(city))
-
+        self.ids.time.text = (str(time))
+    
     def close_popup(self):
         self.parent.parent.parent.dismiss()
         

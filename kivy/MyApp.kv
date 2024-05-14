@@ -148,6 +148,18 @@
             size: app.root_window.width / 5, app.root_window.height / 5
             pos: (app.root_window.width / 2) - (self.width / 2), (app.root_window.height / 1.5) - (self.height / 2)
 
+        Label:
+            id: time
+            text: ""
+            pos: (app.root_window.width / 1.45) - (self.width / 2), (app.root_window.height / 1.45) - (self.height / 2)
+            font_size: app.root_window.width / 40
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: app.root_window.width / 480
+                    rectangle: (app.root_window.width / 1.1) - (self.width / 2), (app.root_window.height / 1.06) - (self.height / 2), app.root_window.width / 7, app.root_window.height / 5
+
 <error>:
     Label:
         text: "Something went wrong..."
