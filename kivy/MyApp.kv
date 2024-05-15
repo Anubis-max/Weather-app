@@ -130,7 +130,7 @@
 
         Label:
             pos: (app.root_window.width / 3.35) - (self.width / 2), (app.root_window.height / 1.45) - (self.height / 2)
-            font_size: app.root_window.width / 40
+            font_size: app.root_window.width / 40 - (len(self.text) + 1) if len(self.text) > 10 else app.root_window.width / 40
             id: city
             text: ""
             canvas.before:
